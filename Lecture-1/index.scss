@@ -1,0 +1,137 @@
+.logo {
+    width: 100px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid;
+}
+.nav-bar > ul {
+    display: flex;
+    list-style-type: none;
+    font-size: 24px;
+}
+.nav-bar > ul > li {
+    padding: 10px;
+    margin: 10px;
+}
+
+.res-card {
+    width: 250px;
+    /* height: 300px; */
+    height: 100%;
+    border-radius: 2px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+.res-card:hover {
+    border: 1px solid gray;
+
+}
+.res-logo {
+    width: 100%;
+    height: 70%;
+}
+
+.res-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+  
+  .card {
+      position: relative;
+      -webkit-box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+      background-color: #FFF;
+      border-radius: 6px;
+      height: 500px;
+      overflow: hidden;
+      width: 350px;
+      margin: 40px auto;
+    
+    .shimmerBG {
+      animation-duration: 2.2s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-name: shimmer;
+      animation-timing-function: linear;
+      background: #181616;
+      background: linear-gradient(to right, #292828 8%, #424141 18%, #292626 33%);
+      background-size: 1200px 100%;
+  }
+  
+  
+  @-webkit-keyframes shimmer {
+      0% {
+          background-position: -100% 0;
+      }
+      100% {
+          background-position: 100% 0;
+      }
+  }
+  
+  @keyframes shimmer {
+      0% {
+          background-position: -1200px 0;
+      }
+      100% {
+          background-position: 1200px 0;
+      }
+  }
+    
+      .media {
+      height: 200px;
+  }
+  
+  .p-32 {
+      padding: 32px;
+  }
+  
+  .title-line {
+      height: 24px;
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 20px;
+  }
+  
+  .content-line {
+      height: 8px;
+      width: 100%;
+      margin-bottom: 16px;
+      border-radius: 8px;
+  }
+    
+    .end {
+        width: 40%;
+      }
+  
+  }
+  
+  
+  .m-t-24 {
+      margin-top: 24px;
+  }
+
+  .shimmer-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .login-button {
+    padding: 0 20px;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
