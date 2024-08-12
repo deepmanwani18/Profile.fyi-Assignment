@@ -10,10 +10,10 @@ import UserClass from "./UserClass";
 //     </div>
 //   );
 // };
-export class About extends React.Component {
+class About extends React.Component {
   constructor() {
     super();
-    
+
     console.log("constructor parent");
   }
   componentDidMount() {
@@ -37,3 +37,5 @@ export class About extends React.Component {
 //   and once the initial render is completed, for all four components, did mount
 //   will be called and after that for parent didMount hook will be called
 }
+
+export default About;
