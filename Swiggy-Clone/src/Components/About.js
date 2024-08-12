@@ -1,5 +1,11 @@
+import { User } from "./User";
+import UserClass from "./UserClass";
+
 export const About = () => {
-    return <h1> 
-        About US!!
-    </h1>
-}
+  return (
+    <div>
+      <User name={"Deepesh Function"} />
+      <UserClass name={"Deepesh Class"} />
+    </div>
+  );
+};
