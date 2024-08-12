@@ -3,14 +3,26 @@ import React from "react";
 class UserClass extends React.Component {
   // constructor(props) {
   // }
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(this.props.name, "constructor child");
     this.state = {
       count: 0,
       count2: 2,
+      userInfo: {},
     };
   }
+  async componentDidMount() {
+    const userInfo = await fetch("https://api.github.com/users/deepmanwani18");
+    const userInfoJSON = await userInfo.json();
+    console.log(userInfoJSON);
+    this.setState({ userInfo: userInfoJSON });
+  }
+
   render() {
+    const { name, login, avatar_url } = this.state.userInfo;
+    console.log(this.state.userInfo);
+    console.log(this.props.name, "render child");
     const { count, count2 } = this.state;
     return (
       <div className="user-card">
@@ -26,10 +38,9 @@ class UserClass extends React.Component {
         >
           Increment
         </button>
-        <h1>{this.props.name}</h1>
-        <h2>Software Engineer</h2>
-        <p>Looking for Jobs</p>
-        <p>From Sikar, Rajasthan</p>
+        <h1>Github Data</h1>
+        <h2>name: {login || name}</h2>
+        <img style={{ borderRadius: "50%", height: "100px" }} src={avatar_url} />
       </div>
     );
   }

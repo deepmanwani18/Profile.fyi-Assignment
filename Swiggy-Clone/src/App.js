@@ -8,9 +8,14 @@ import { Contact } from "./Components/Contact";
 import { ErrorComponent } from "./Components/ErrorComponent";
 import { About } from "./Components/About";
 import RestaurantMenu from "./Components/RestaurantMenu";
+import useActivityStatus from "./utils/useActivityStatus";
 
 const AppLayout = () => {
-  return (
+  const activityStatus = useActivityStatus();
+
+  return !activityStatus ? (
+    <h1>Your internet is a bit wonky, please check network connection.</h1>
+  ) : (
     <div className="app">
       <HeaderComponent />
       <Outlet />
@@ -23,24 +28,23 @@ const appRouter = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: '/',
-        element: <BodyComponent />
+        path: "/",
+        element: <BodyComponent />,
       },
       {
         path: "/contact",
         element: <Contact />,
       },
       {
-        path: '/about',
-        element: <About />
-      }, 
+        path: "/about",
+        element: <About />,
+      },
       {
-        path: 'restaurants/:id',
-        element: <RestaurantMenu />
-      }
+        path: "restaurants/:id",
+        element: <RestaurantMenu />,
+      },
     ],
     errorElement: <ErrorComponent />,
-
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
