@@ -3,7 +3,7 @@ import CDN_URL from "../utils/constant";
 const RestaurantCard = ({ resData }) => {
   const { name, cuisines, avgRating, sla, costForTwo } = resData?.info;
   return (
-    <div className="m-4 p-4 w-[250px] h-[450px] bg-orange rounded-lg">
+    <div className="m-4 p-4 w-[250px] h-[450px] bg-skin shadow-lg rounded-lg">
       <img
         className="w-56 h-[200px] rounded-lg"
         src={CDN_URL + resData.info.cloudinaryImageId}
@@ -22,7 +22,7 @@ export const promotedResCard = (RestaurantCard) => {
   return (props) => {
     return (
       <div>
-        <label className="absolute bg-purple rounded p-0.5 m-1">Open now</label>
+        <span className="absolute bg-orange rounded p-0.5 m-1 text-white">Open now</span>
         <RestaurantCard {...props} />
       </div>
     );

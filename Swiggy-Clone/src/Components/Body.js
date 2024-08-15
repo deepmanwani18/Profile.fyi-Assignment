@@ -54,7 +54,7 @@ export const BodyComponent = () => {
             className="m-4 border border-solid rounded"
           />
           <button
-            className="m-4 bg-purple py-1 px-4 rounded text-blue-600"
+            className="m-4 bg-orange py-1 px-4 rounded text-white font-bold"
             onClick={() => {
               const newResData = resData.filter((res) =>
                 res.info.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -71,7 +71,7 @@ export const BodyComponent = () => {
               RES_CARDS_DATA.filter((res) => res.info.avgRating > 4.2)
             );
           }}
-          className="bg-green rounded py-1 px-4 m-4"
+          className="bg-orange rounded py-1 px-4 m-4 text-white font-bold"
         >
           See Top rated restaurants
         </button>

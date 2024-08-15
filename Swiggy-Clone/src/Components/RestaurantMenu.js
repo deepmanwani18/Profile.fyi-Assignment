@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
 import { Shimmer } from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { singleResDataUrl } from "../utils/constant";
 import userFetchResMenuData from "../utils/useFetchResMenuData";
+import RestaurantCategoryAccordion from "./RestaurantCategoryAccordion";
 
 const RestaurantMenu = () => {
   const params = useParams();
+  // custom hook to abstract the fetching data logic
   const resDataJson = userFetchResMenuData(params.id);
   if (resDataJson === null) {
     return (
@@ -17,25 +18,35 @@ const RestaurantMenu = () => {
       </>
     );
   }
+  // "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
   const { name, locality, avgRating, cuisines, costForTwoMessage } =
     resDataJson?.data?.cards[2]?.card?.card?.info;
-  const foodItems =
-    resDataJson?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]
-      ?.card?.card?.itemCards;
+ 
+
+  console.log(
+    resDataJson?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+  );
+  const categoriesArray =
+    resDataJson?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (i) => {
+        return (
+          i?.card?.card?.["@type"] ===
+          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+        );
+      }
+    );
+
+    console.log(categoriesArray)
   return (
-    <div>
-      <h1>{name + ", " + locality}</h1>
-      <p>{avgRating} stars</p>
+    <div className="text-center bg-skin">
+      <h1 className="font-bold  text-2xl pt-5">{name + ", " + locality}</h1>
+      <p className="font-bold text-lg">{avgRating} stars</p>
       <p>
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
-      {foodItems.map((foodItem) => {
+      {categoriesArray.map((foodItem, index) => {
         return (
-          <h1 key={foodItem?.card?.info?.id}>
-            {foodItem?.card?.info?.name}- Rs.{" "}
-            {foodItem?.card?.info?.price / 100 ||
-              foodItem?.card?.info?.defaultPrice / 100}{" "}
-          </h1>
+          <RestaurantCategoryAccordion key={index} categoryInfo={foodItem}/>
         );
       })}
     </div>
