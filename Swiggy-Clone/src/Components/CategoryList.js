@@ -7,7 +7,11 @@ const CategoryList = ({ listItems }) => {
       {listItems.map((item, index) => {
         return (
           <div
-            className="p-2 m-2  border-orange border-b-2"
+            className={
+              index === listItems.length - 1
+                ? "p-4 m-2"
+                : "p-4 m-2 border-orange border-b-2"
+            }
             key={item?.card.info?.id}
           >
             <div className="flex justify-between">
