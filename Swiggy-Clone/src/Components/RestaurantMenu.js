@@ -8,7 +8,14 @@ const RestaurantMenu = () => {
   const params = useParams();
   const resDataJson = userFetchResMenuData(params.id);
   if (resDataJson === null) {
-    return <Shimmer />;
+    return (
+      <>
+        <div className="flex flex-wrap">
+          <Shimmer />;
+          <Shimmer />;
+        </div>
+      </>
+    );
   }
   const { name, locality, avgRating, cuisines, costForTwoMessage } =
     resDataJson?.data?.cards[2]?.card?.card?.info;
