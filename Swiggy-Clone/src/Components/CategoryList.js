@@ -28,12 +28,7 @@ const CategoryList = ({ listItems }) => {
                 </p>
                 <p className="text-xs">{item?.card?.info?.description}</p>
               </div>
-              <div>
-                <div className="absolute">
-                  <button className="p-1 shadow-xl rounded-lg  mx-8 my-14 text-white bg-orange">
-                    Add +
-                  </button>
-                </div>
+              <div className="container">
                 <img
                   className="w-28 "
                   src={
@@ -42,7 +37,11 @@ const CategoryList = ({ listItems }) => {
                       : require("../../Public/default-image.jpeg")
                   }
                 />
+                <button className="btn p-1  shadow-xl rounded-lg   text-white bg-orange">
+                  Add +
+                </button>
               </div>
+              {/*  shadow-xl rounded-lg  mx-8 my-14 text-white bg-orange */}
             </div>
           </div>
         );

@@ -79,3 +79,24 @@
 }
 
 
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.container img {
+  float: right; 
+  height: auto;
+}
+
+.container .btn {
+  position: absolute;
+  top: 98%;
+  left: 82%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+ 
+}
+
