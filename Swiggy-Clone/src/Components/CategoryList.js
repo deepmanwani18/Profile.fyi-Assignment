@@ -1,7 +1,47 @@
+import { useCart } from "../utils/CartContext";
 import CDN_URL from "../utils/constant";
+import { useState } from "react";
 
 const CategoryList = ({ listItems }) => {
-  console.log(listItems);
+  const { dispatch } = useCart();
+  const [listItemsState, setListItemsState] = useState([]);
+  const addToCart = (index) => {
+    if (listItems[index]["addedQuantity"]) {
+      listItems[index]["addedQuantity"]++;
+    } else {
+      listItems[index]["addedQuantity"] = 1;
+    }
+    setListItemsState(listItems);
+    const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
+    dispatch({
+      type: "ADD",
+      payload: { item: name, id: id, price: price || defaultPrice },
+    });
+  };
+  const removeItemsFromCart = (index) => {
+    const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
+
+    if (listItems[index]["addedQuantity"] === 1) {
+      listItems[index]["addedQuantity"] = 0;
+      setListItemsState(listItems);
+
+      dispatch({
+        type: "REMOVE",
+        payload: { item: name, id: id, price: price || defaultPrice },
+      });
+    } else {
+      listItems[index]["addedQuantity"]--;
+      if (listItems[index]["addedQuantity"] <= 0) {
+        listItems[index]["addedQuantity"] = 0;
+      }
+      setListItemsState(listItems);
+      console.log(defaultPrice);
+      dispatch({
+        type: "MINUS",
+        payload: { item: name, id: id, price: price || defaultPrice },
+      });
+    }
+  };
   return (
     <div>
       {listItems.map((item, index) => {
@@ -37,9 +77,32 @@ const CategoryList = ({ listItems }) => {
                       : require("../../Public/default-image.jpeg")
                   }
                 />
-                <button className="btn p-1  shadow-xl rounded-lg   text-white bg-orange">
-                  Add +
-                </button>
+                {listItemsState[index]?.addedQuantity === undefined ||
+                listItemsState[index]?.addedQuantity <= 0 ? (
+                  <button
+                    onClick={() => addToCart(index)}
+                    className="btn p-1  shadow-xl rounded-lg   text-white bg-orange"
+                  >
+                    Add +
+                  </button>
+                ) : (
+                  <div className="btn flex justify-between w-16 p-1 shadow-xl rounded-lg text-white bg-orange">
+                    <span
+                      onClick={() => removeItemsFromCart(index)}
+                      className="px-1 cursor-pointer"
+                    >
+                      {" "}
+                      −{" "}
+                    </span>
+                    <span>{listItemsState[index]?.addedQuantity}</span>
+                    <span
+                      onClick={() => addToCart(index)}
+                      className="px-1 cursor-pointer"
+                    >
+                      +
+                    </span>
+                  </div>
+                )}
               </div>
               {/*  shadow-xl rounded-lg  mx-8 my-14 text-white bg-orange */}
             </div>

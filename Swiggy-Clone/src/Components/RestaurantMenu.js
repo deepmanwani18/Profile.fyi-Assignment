@@ -23,9 +23,7 @@ const RestaurantMenu = () => {
     resDataJson?.data?.cards[2]?.card?.card?.info;
  
 
-  console.log(
-    resDataJson?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-  );
+
   const categoriesArray =
     resDataJson?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (i) => {
@@ -36,7 +34,6 @@ const RestaurantMenu = () => {
       }
     );
 
-    console.log(categoriesArray)
   return (
     <div className="text-center bg-skin">
       <h1 className="font-bold  text-2xl pt-5">{name + ", " + locality}</h1>

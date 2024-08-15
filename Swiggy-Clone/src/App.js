@@ -7,6 +7,8 @@ import RestaurantMenu from "./Components/RestaurantMenu";
 import useActivityStatus from "./utils/useActivityStatus";
 import { BodyComponent } from "./Components/Body";
 import About from "./Components/About";
+import { CartProvider } from "./utils/CartContext";
+import Cart from "./Components/Cart";
 
 const AppLayout = () => {
   const activityStatus = useActivityStatus();
@@ -26,7 +28,11 @@ const Contact = lazy(() => import("./Components/Contact"));
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: (
+      <CartProvider>
+        <AppLayout />
+      </CartProvider>
+    ),
     children: [
       {
         path: "/",
@@ -48,6 +54,10 @@ const appRouter = createBrowserRouter([
         path: "restaurants/:id",
         element: <RestaurantMenu />,
       },
+      {
+        path: '/cart',
+        element: <Cart />
+      }
     ],
     errorElement: <ErrorComponent />,
   },

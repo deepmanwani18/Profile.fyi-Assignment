@@ -2,7 +2,6 @@ import CategoryList from "./CategoryList";
 import { useState } from "react";
 
 const RestaurantCategoryAccordion = ({ categoryInfo }) => {
-  console.log(categoryInfo);
   const { title, itemCards } = categoryInfo?.card?.card;
   const [showAccordianData, setShowAccordianData] = useState(true);
   return (
