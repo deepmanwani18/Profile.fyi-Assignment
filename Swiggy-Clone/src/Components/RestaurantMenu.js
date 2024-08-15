@@ -43,7 +43,7 @@ const RestaurantMenu = () => {
       </p>
       {categoriesArray.map((foodItem, index) => {
         return (
-          <RestaurantCategoryAccordion key={index} categoryInfo={foodItem}/>
+          <RestaurantCategoryAccordion key={index} resId={params.id} categoryInfo={foodItem}/>
         );
       })}
     </div>

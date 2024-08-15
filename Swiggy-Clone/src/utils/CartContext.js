@@ -8,11 +8,14 @@ const initialState = {
   addedItems: [],
   totalAmount: 0,
 };
-
+// localStorage.setItem("cart", JSON.stringify(initialState));
 const cartReducer = (state, action) => {
   console.log(state, "state", action, "action");
+
   switch (action.type) {
     case "ADD":
+     
+
       const updatedItems = [...state.addedItems];
       const itemIndex = updatedItems.findIndex(
         (item) => item.id === action.payload.id
@@ -23,27 +26,42 @@ const cartReducer = (state, action) => {
       } else {
         updatedItems.push({ ...action.payload, quantity: 1 });
       }
-      const newTotalAmount = state.totalAmount + action.payload.price / 100;
-      console.log({
-        ...state,
-        addedItems: updatedItems,
-        totalAmount: newTotalAmount,
-      });
+      const newTotalAmount =
+        (state.totalAmount || 0) + action.payload.price / 100;
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          ...state,
+          addedItems: updatedItems,
+          totalAmount: newTotalAmount,
+          resId: action.payload.resId,
+        })
+      );
       return {
         ...state,
         addedItems: updatedItems,
         totalAmount: newTotalAmount,
+        resId: action.payload.resId,
       };
     case "MINUS":
       const newItems = [...state.addedItems];
       const index = newItems.findIndex((item) => item.id === action.payload.id);
       newItems[index].quantity--;
-      const updatedAmount = state.totalAmount - action.payload.price / 100;
-
+      const updatedAmount = state.totalAmount - action.payload.price / 100 || 0;
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          ...state,
+          addedItems: newItems,
+          totalAmount: updatedAmount,
+          resId: action.payload.resId,
+        })
+      );
       return {
         ...state,
         addedItems: newItems,
         totalAmount: updatedAmount,
+        resId: action.payload.resId,
       };
     case "REMOVE":
       const filteredItems = state.addedItems.filter(
@@ -51,13 +69,28 @@ const cartReducer = (state, action) => {
       );
       const newAmount =
         state.totalAmount - action.payload.price * action.payload.quantity;
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          ...state,
+          addedItems: filteredItems,
+          totalAmount: newAmount || 0,
+          resId: action.payload.resId,
+        })
+      );
       return {
         ...state,
         addedItems: filteredItems,
         totalAmount: newAmount,
+        resId: action.payload.resId,
       };
     case "CLEAR":
-      return initialState;
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({ ...initialState, resId: action.payload.resId })
+      );
+
+      return { ...initialState, resId: action.payload.resId };
     default:
       return state;
   }

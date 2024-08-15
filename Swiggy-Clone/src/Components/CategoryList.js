@@ -1,11 +1,18 @@
 import { useCart } from "../utils/CartContext";
 import CDN_URL from "../utils/constant";
 import { useState } from "react";
-
-const CategoryList = ({ listItems }) => {
+const CategoryList = ({ listItems, resId }) => {
+  console.log(resId);
+ 
   const { dispatch } = useCart();
   const [listItemsState, setListItemsState] = useState([]);
   const addToCart = (index) => {
+    if (JSON.parse(localStorage.getItem("cart"))) {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (cart.resId !== resId) {
+        alert("you are ordering from different restaurant");
+      }
+    }
     if (listItems[index]["addedQuantity"]) {
       listItems[index]["addedQuantity"]++;
     } else {
@@ -15,7 +22,12 @@ const CategoryList = ({ listItems }) => {
     const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
     dispatch({
       type: "ADD",
-      payload: { item: name, id: id, price: price || defaultPrice },
+      payload: {
+        item: name,
+        id: id,
+        price: price || defaultPrice,
+        resId: resId,
+      },
     });
   };
   const removeItemsFromCart = (index) => {
@@ -27,7 +39,12 @@ const CategoryList = ({ listItems }) => {
 
       dispatch({
         type: "REMOVE",
-        payload: { item: name, id: id, price: price || defaultPrice },
+        payload: {
+          item: name,
+          id: id,
+          price: price || defaultPrice,
+          resId: resId,
+        },
       });
     } else {
       listItems[index]["addedQuantity"]--;
@@ -38,7 +55,12 @@ const CategoryList = ({ listItems }) => {
       console.log(defaultPrice);
       dispatch({
         type: "MINUS",
-        payload: { item: name, id: id, price: price || defaultPrice },
+        payload: {
+          item: name,
+          id: id,
+          price: price || defaultPrice,
+          resId: resId,
+        },
       });
     }
   };
@@ -109,6 +131,7 @@ const CategoryList = ({ listItems }) => {
           </div>
         );
       })}
+    
     </div>
   );
 };
