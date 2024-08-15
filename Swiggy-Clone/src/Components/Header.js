@@ -6,7 +6,9 @@ export const HeaderComponent = () => {
   return (
     <div className="flex justify-between bg-orange shadow-lg pt-2 pb-2">
       <div className="w-28 ml-4">
-        <img className="rounded-full" src={require("../../Public/app-logo.jpeg")} />
+        <Link to="/">
+        <img className="rounded-full cursor-pointer" src={require("../../Public/app-logo.jpeg")} />
+        </Link>
       </div>
       <div className="flex items-center">
           <ul className="flex justify-between m-4 p-4 ">
@@ -14,7 +16,7 @@ export const HeaderComponent = () => {
             <Link to="/" >Home</Link>
           </li>
           <li className="px-4">
-            <Link to="/about">About Us</Link>
+            <Link to="/about">About Me</Link>
           </li>
           <li className="px-4">
           <Link to="/contact">Contact Us</Link>

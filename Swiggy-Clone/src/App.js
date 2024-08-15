@@ -2,11 +2,11 @@ import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { HeaderComponent } from "./Components/Header";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Contact } from "./Components/Contact";
 import { ErrorComponent } from "./Components/ErrorComponent";
 import RestaurantMenu from "./Components/RestaurantMenu";
 import useActivityStatus from "./utils/useActivityStatus";
 import { BodyComponent } from "./Components/Body";
+import About from "./Components/About";
 
 const AppLayout = () => {
   const activityStatus = useActivityStatus();
@@ -21,7 +21,7 @@ const AppLayout = () => {
   );
 };
 
-const About = lazy(() => import("./Components/About"));
+const Contact = lazy(() => import("./Components/Contact"));
 
 const appRouter = createBrowserRouter([
   {
@@ -34,15 +34,15 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <Contact />
+          </Suspense>
+        ),
       },
       {
         path: "/about",
-        element: (
-          <Suspense fallback={<p>Test</p>}>
-            <About />
-          </Suspense>
-        ),
+        element: <About />,
       },
       {
         path: "restaurants/:id",
