@@ -1,8 +1,13 @@
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
+import { useCart } from "../utils/CartContext";
+
 export const HeaderComponent = () => {
+
   const [loginLogoutString, setLoginLogoutString] = useState("Login");
+  const {cartSize} = useCart();
+  
   return (
     <div className="flex justify-between bg-orange shadow-lg pt-2 pb-2">
       <div className="w-28 ml-4">
@@ -26,7 +31,10 @@ export const HeaderComponent = () => {
           </li>
 
           <li className="font-bold text-white px-4">
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">Cart 
+            {cartSize > 0 ?   <span className="text-white" > [{cartSize}] </span>  : ''}
+           
+            </Link>
           </li>
           <button
             onClick={() =>
