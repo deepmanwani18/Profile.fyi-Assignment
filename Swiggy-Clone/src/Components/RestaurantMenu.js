@@ -21,9 +21,6 @@ const RestaurantMenu = () => {
   // "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
   const { name, locality, avgRating, cuisines, costForTwoMessage } =
     resDataJson?.data?.cards[2]?.card?.card?.info;
- 
-
-
   const categoriesArray =
     resDataJson?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (i) => {
@@ -43,7 +40,12 @@ const RestaurantMenu = () => {
       </p>
       {categoriesArray.map((foodItem, index) => {
         return (
-          <RestaurantCategoryAccordion key={index} resId={params.id} categoryInfo={foodItem}/>
+          <RestaurantCategoryAccordion
+            key={index}
+            resId={params.id}
+            resName={name}
+            categoryInfo={foodItem}
+          />
         );
       })}
     </div>

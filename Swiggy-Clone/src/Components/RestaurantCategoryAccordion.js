@@ -1,8 +1,7 @@
 import CategoryList from "./CategoryList";
 import { useState } from "react";
 
-const RestaurantCategoryAccordion = ({ categoryInfo, resId }) => {
-   
+const RestaurantCategoryAccordion = ({ categoryInfo, resId, resName }) => {
   const { title, itemCards } = categoryInfo?.card?.card;
   const [showAccordianData, setShowAccordianData] = useState(true);
   return (
@@ -17,7 +16,7 @@ const RestaurantCategoryAccordion = ({ categoryInfo, resId }) => {
           </span>
           <span> {showAccordianData ?  <>&#8963;</>: <>&#8964;</>}</span>
         </div>
-        {showAccordianData && <CategoryList resId={resId} listItems={itemCards} />}
+        {showAccordianData && <CategoryList resName={resName} resId={resId} listItems={itemCards} />}
       </div>
     </div>
   );

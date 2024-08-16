@@ -3,7 +3,7 @@ import CDN_URL from "../utils/constant";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-const CategoryList = ({ listItems, resId }) => {
+const CategoryList = ({ listItems, resId, resName }) => {
   const [open, setOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
   const handleClose = () => setOpen(false);
@@ -47,6 +47,7 @@ const CategoryList = ({ listItems, resId }) => {
         id: id,
         price: price || defaultPrice,
         resId: resId,
+        resName: resName
       },
     });
   };
@@ -54,7 +55,6 @@ const CategoryList = ({ listItems, resId }) => {
     const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
     if(listItems[index]["addedQuantity"]  === undefined) {
       listItems[index]["addedQuantity"] = cart.addedItems.filter(c => {
-        console.log(c);
         return c.id === id; 
       })[0].quantity;
     }
@@ -69,6 +69,7 @@ const CategoryList = ({ listItems, resId }) => {
           id: id,
           price: price || defaultPrice,
           resId: resId,
+          resName: resName,
           quantity: 1
         },
       });
@@ -85,6 +86,7 @@ const CategoryList = ({ listItems, resId }) => {
           id: id,
           price: price || defaultPrice,
           resId: resId,
+          resName: resName
         },
       });
     }

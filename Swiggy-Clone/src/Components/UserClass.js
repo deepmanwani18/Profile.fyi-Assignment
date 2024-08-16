@@ -5,7 +5,6 @@ class UserClass extends React.Component {
   // }
   constructor(props) {
     super(props);
-    console.log(this.props.name, "constructor child");
     this.state = {
       count: 0,
       count2: 2,
@@ -20,7 +19,6 @@ class UserClass extends React.Component {
 
   render() {
     const { name, login, avatar_url } = this.state.userInfo;
-    console.log(this.props.name, "render child");
     const { count, count2 } = this.state;
     return (
       <div className="user-card">

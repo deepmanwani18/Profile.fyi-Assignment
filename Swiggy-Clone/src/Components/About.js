@@ -2,23 +2,11 @@ import React from "react";
 import { User } from "./User";
 import UserClass from "./UserClass";
 
-// export const About = () => {
-//   return (
-//     <div>
-//       <User name={"Deepesh Function"} />
-//       <UserClass name={"Deepesh Class"} />
-//     </div>
-//   );
-// };
 class About extends React.Component {
   constructor() {
     super();
-
-    console.log("constructor parent");
   }
-  componentDidMount() {
-    console.log("did mount parent");
-  }
+ 
   render() {
     return (
       <>

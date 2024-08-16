@@ -9,6 +9,7 @@ const initialState = {
   totalAmount: 0,
 };
 const cartReducer = (state, action) => {
+  console.log(action)
   state = JSON.parse(localStorage.getItem("cart")) || initialState;
   switch (action.type) {
     case "ADD":
@@ -31,6 +32,7 @@ const cartReducer = (state, action) => {
           addedItems: updatedItems,
           totalAmount: newTotalAmount,
           resId: action.payload.resId,
+          resName: action.payload.resName
         })
       );
       return {
@@ -38,6 +40,7 @@ const cartReducer = (state, action) => {
         addedItems: updatedItems,
         totalAmount: newTotalAmount,
         resId: action.payload.resId,
+        resName: action.payload.resName
       };
     case "MINUS":
       const newItems = [...state.addedItems];
@@ -51,6 +54,7 @@ const cartReducer = (state, action) => {
           addedItems: newItems,
           totalAmount: updatedAmount,
           resId: action.payload.resId,
+          resName: action.payload.resName
         })
       );
       return {
@@ -58,6 +62,7 @@ const cartReducer = (state, action) => {
         addedItems: newItems,
         totalAmount: updatedAmount,
         resId: action.payload.resId,
+        resName: action.payload.resName
       };
     case "REMOVE":
       const filteredItems = state.addedItems.filter(
@@ -73,6 +78,7 @@ const cartReducer = (state, action) => {
           addedItems: filteredItems,
           totalAmount: newAmount || 0,
           resId: action.payload.resId,
+          resName: action.payload.resName
         })
       );
       return {
@@ -80,6 +86,7 @@ const cartReducer = (state, action) => {
         addedItems: filteredItems,
         totalAmount: newAmount,
         resId: action.payload.resId,
+        resName: action.payload.resName
       };
     case "CLEAR":
       localStorage.setItem("cart", JSON.stringify(initialState));
@@ -95,7 +102,7 @@ export const CartProvider = ({ children }) => {
   let cartSize = 0;
   const cart = JSON.parse(localStorage.getItem("cart"));
   if (cart) {
-    cartSize = cart.addedItems.reduce(
+    cartSize = cart?.addedItems?.reduce(
       (count, item) => count + item.quantity,
       0
     );
