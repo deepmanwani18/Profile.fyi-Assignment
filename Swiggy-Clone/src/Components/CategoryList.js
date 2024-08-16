@@ -1,18 +1,38 @@
 import { useCart } from "../utils/CartContext";
 import CDN_URL from "../utils/constant";
 import { useState } from "react";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 const CategoryList = ({ listItems, resId }) => {
-  console.log(resId);
- 
+  const [open, setOpen] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
+  const handleClose = () => setOpen(false);
   const { dispatch } = useCart();
   const [listItemsState, setListItemsState] = useState([]);
-  const addToCart = (index) => {
+  let cartIds = [];
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  if(cart) {
+     cartIds = cart?.addedItems.map((i) => {
+      return i.id;
+    });
+
+  }
+  const handleAddItem = (index) => {
     if (JSON.parse(localStorage.getItem("cart"))) {
       const cart = JSON.parse(localStorage.getItem("cart"));
       if (cart.resId !== resId) {
-        alert("you are ordering from different restaurant");
+        // alert("you are ordering from different restaurant");
+        setOpen(true);
+        setModalIndex(index);
+      } else {
+        addToCart(index);
       }
+    } else {
+      addToCart(index);
     }
+  };
+
+  const addToCart = (index) => {
     if (listItems[index]["addedQuantity"]) {
       listItems[index]["addedQuantity"]++;
     } else {
@@ -44,6 +64,7 @@ const CategoryList = ({ listItems, resId }) => {
           id: id,
           price: price || defaultPrice,
           resId: resId,
+          quantity: 1
         },
       });
     } else {
@@ -52,7 +73,6 @@ const CategoryList = ({ listItems, resId }) => {
         listItems[index]["addedQuantity"] = 0;
       }
       setListItemsState(listItems);
-      console.log(defaultPrice);
       dispatch({
         type: "MINUS",
         payload: {
@@ -63,6 +83,18 @@ const CategoryList = ({ listItems, resId }) => {
         },
       });
     }
+  };
+  const clearCartAndAddNewItem = (index) => {
+    dispatch({
+      type: "CLEAR",
+    });
+    addToCart(index);
+    handleClose();
+  };
+  const style = {
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    p: 4,
   };
   return (
     <div>
@@ -99,10 +131,11 @@ const CategoryList = ({ listItems, resId }) => {
                       : require("../../Public/default-image.jpeg")
                   }
                 />
-                {listItemsState[index]?.addedQuantity === undefined ||
-                listItemsState[index]?.addedQuantity <= 0 ? (
+                {(listItemsState[index]?.addedQuantity === undefined ||
+                listItemsState[index]?.addedQuantity <= 0 ) &&
+                cartIds.indexOf(item?.card.info?.id) === -1 ? (
                   <button
-                    onClick={() => addToCart(index)}
+                    onClick={() => handleAddItem(index)}
                     className="btn p-1  shadow-xl rounded-lg   text-white bg-orange"
                   >
                     Add +
@@ -116,7 +149,7 @@ const CategoryList = ({ listItems, resId }) => {
                       {" "}
                       −{" "}
                     </span>
-                    <span>{listItemsState[index]?.addedQuantity}</span>
+                    <span>{listItemsState[index]?.addedQuantity || cart?.addedItems[cartIds.indexOf(item?.card.info?.id)]?.quantity}</span>
                     <span
                       onClick={() => addToCart(index)}
                       className="px-1 cursor-pointer"
@@ -131,7 +164,38 @@ const CategoryList = ({ listItems, resId }) => {
           </div>
         );
       })}
-    
+      <Modal
+        open={open}
+        index={modalIndex}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          className="bg-skin rounded-lg absolute top-[50%] left-[50%] shadow-lg"
+          sx={style}
+        >
+          <h1 className=" text-orange font-bold">Items already in cart</h1>
+          <h2>
+            Your cart contains items from other restaurant. Would you like to
+            reset your cart for adding items from this restaurant?
+          </h2>
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={handleClose}
+              className="  px-4 py-2 rounded-lg text-orange bg-white"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => clearCartAndAddNewItem(modalIndex)}
+              className="  px-4 py-2 rounded-lg text-white bg-orange"
+            >
+              Yes
+            </button>
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 };

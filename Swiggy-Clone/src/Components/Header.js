@@ -15,17 +15,17 @@ export const HeaderComponent = () => {
       </div>
       <div className="flex items-center">
         <ul className="flex justify-between m-4 p-4 ">
-          <li className="px-4">
+          <li className="font-bold text-white px-4">
             <Link to="/">Home</Link>
           </li>
-          <li className="px-4">
+          <li className="font-bold text-white px-4">
             <Link to="/about">About Me</Link>
           </li>
-          <li className="px-4">
+          <li className="font-bold text-white px-4">
             <Link to="/contact">Contact Us</Link>
           </li>
 
-          <li className="px-4">
+          <li className="font-bold text-white px-4">
             <Link to="/cart">Cart</Link>
           </li>
           <button
@@ -34,7 +34,7 @@ export const HeaderComponent = () => {
                 loginLogoutString === "Login" ? "Logout" : "Login"
               )
             }
-            className="login-button"
+            className="font-bold text-white login-button"
           >
             {loginLogoutString}
           </button>

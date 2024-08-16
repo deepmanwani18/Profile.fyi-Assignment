@@ -10,12 +10,9 @@ const initialState = {
 };
 // localStorage.setItem("cart", JSON.stringify(initialState));
 const cartReducer = (state, action) => {
-  console.log(state, "state", action, "action");
-
+  state = JSON.parse(localStorage.getItem("cart")) || initialState;
   switch (action.type) {
     case "ADD":
-     
-
       const updatedItems = [...state.addedItems];
       const itemIndex = updatedItems.findIndex(
         (item) => item.id === action.payload.id
@@ -68,7 +65,8 @@ const cartReducer = (state, action) => {
         (item) => item.id !== action.payload.id
       );
       const newAmount =
-        state.totalAmount - action.payload.price * action.payload.quantity;
+        state.totalAmount -
+        (action.payload.price / 100) * action.payload.quantity;
       localStorage.setItem(
         "cart",
         JSON.stringify({
@@ -85,12 +83,9 @@ const cartReducer = (state, action) => {
         resId: action.payload.resId,
       };
     case "CLEAR":
-      localStorage.setItem(
-        "cart",
-        JSON.stringify({ ...initialState, resId: action.payload.resId })
-      );
+      localStorage.setItem("cart", JSON.stringify(initialState));
 
-      return { ...initialState, resId: action.payload.resId };
+      return initialState;
     default:
       return state;
   }
@@ -98,7 +93,7 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, initialState);
-
+  console.log(cartState);
   return (
     <cartContext.Provider value={{ cartState, dispatch }}>
       {children}
