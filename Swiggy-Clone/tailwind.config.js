@@ -10,7 +10,8 @@ module.exports = {
       skin: '#F1DEC6',
       green: '#179BAE',
       purple: '#4158A6',
-      white: 'white'
+      white: 'white',
+      gray: 'gray'
     },
   },
   plugins: [],
