@@ -9,9 +9,9 @@ const initialState = {
   totalAmount: 0,
 };
 const cartReducer = (state, action) => {
-  console.log(action)
   state = JSON.parse(localStorage.getItem("cart")) || initialState;
   switch (action.type) {
+
     case "ADD":
       const updatedItems = [...state.addedItems];
       const itemIndex = updatedItems.findIndex(
@@ -93,6 +93,7 @@ const cartReducer = (state, action) => {
 
       return initialState;
     default:
+
       return state;
   }
 };

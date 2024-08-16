@@ -15,6 +15,7 @@ export const BodyComponent = () => {
 
   // retrieving the higher order component
   const PromotedResCard = promotedResCard(RestaurantCard);
+
   const fetchData = async () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
@@ -28,7 +29,7 @@ export const BodyComponent = () => {
     );
   };
 
-  return filteredResData.length === 0 ? (
+  return resData.length === 0 ? (
     <div className="shimmer-container">
       <Shimmer />
       <Shimmer />
@@ -68,7 +69,7 @@ export const BodyComponent = () => {
         <button
           onClick={() => {
             setfilteredResData(
-              RES_CARDS_DATA.filter((res) => res.info.avgRating > 4.2)
+              filteredResData.filter((res) => res.info.avgRating > 4.2)
             );
           }}
           className="bg-orange rounded py-1 px-4 m-4 text-white font-bold"
@@ -77,6 +78,8 @@ export const BodyComponent = () => {
         </button>
       </div>
       <div className="flex flex-wrap">
+      {filteredResData.length === 0 && <p>404! Not found</p>}
+
         {filteredResData.map((resCard) => {
           return (
             <Link key={resCard.info.id} to={"restaurants/" + resCard.info.id}>
