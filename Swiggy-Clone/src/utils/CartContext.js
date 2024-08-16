@@ -8,7 +8,6 @@ const initialState = {
   addedItems: [],
   totalAmount: 0,
 };
-// localStorage.setItem("cart", JSON.stringify(initialState));
 const cartReducer = (state, action) => {
   state = JSON.parse(localStorage.getItem("cart")) || initialState;
   switch (action.type) {
@@ -94,13 +93,15 @@ const cartReducer = (state, action) => {
 export const CartProvider = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, initialState);
   let cartSize = 0;
-  const cart = JSON.parse(localStorage.getItem('cart'));
-  if(cart) {
-     cartSize = cart.addedItems.reduce((count, item) => count + item.quantity, 0);
-
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  if (cart) {
+    cartSize = cart.addedItems.reduce(
+      (count, item) => count + item.quantity,
+      0
+    );
   }
   return (
-    <cartContext.Provider value={{ cartSize ,cartState, dispatch }}>
+    <cartContext.Provider value={{ cartSize, cartState, dispatch }}>
       {children}
     </cartContext.Provider>
   );

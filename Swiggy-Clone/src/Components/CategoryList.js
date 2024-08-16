@@ -52,7 +52,12 @@ const CategoryList = ({ listItems, resId }) => {
   };
   const removeItemsFromCart = (index) => {
     const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
-
+    if(listItems[index]["addedQuantity"]  === undefined) {
+      listItems[index]["addedQuantity"] = cart.addedItems.filter(c => {
+        console.log(c);
+        return c.id === id; 
+      })[0].quantity;
+    }
     if (listItems[index]["addedQuantity"] === 1) {
       listItems[index]["addedQuantity"] = 0;
       setListItemsState(listItems);
