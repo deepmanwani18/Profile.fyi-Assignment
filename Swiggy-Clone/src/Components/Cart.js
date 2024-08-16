@@ -30,25 +30,20 @@ const Cart = () => {
       <div className="w-6/12 m-auto mt-4 bg-skin p-4  mb-4 rounded shadow-2xl  ">
         {cartItems.map((i) => {
           return (
-            <div className="m-4 p-4 flex justify-between" key={i.id}>
-              <h1 className="w-[30%] ml-2 float-left font-bold text-xl">
-                {i.item}
-              </h1>
+            <div className="m-4 p-4 flex justify-between  w-full gap-12" key={i.id}>
+              <h1 className="w-[80%] flex font-bold text-xl">{i.item}</h1>
 
-              <div className="btn flex justify-between w-16 p-1 shadow-xl rounded-lg text-white bg-orange">
+              <div className="flex items-center justify-between w-24 p-1 shadow-xl rounded-lg text-white bg-orange">
                 <span onClick={() => {}} className="px-1 cursor-pointer">
                   {" "}
                   −{" "}
                 </span>
                 <span>{i.quantity}</span>
-                <span
-                  onClick={() => {}}
-                  className="px-1 cursor-pointer"
-                >
+                <span onClick={() => {}} className="px-1 cursor-pointer">
                   +
                 </span>
               </div>
-              <p>₹{(i.price / 100) * i.quantity}</p>
+              <p className="text-xl">₹{(i.price / 100) * i.quantity}</p>
             </div>
           );
         })}

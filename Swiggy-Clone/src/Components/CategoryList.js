@@ -20,7 +20,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
   const handleAddItem = (index) => {
     if (JSON.parse(localStorage.getItem("cart"))) {
       const cart = JSON.parse(localStorage.getItem("cart"));
-      if (cart.resId !== resId) {
+      if (cart.resId !== resId && cart.addedItems.length !== 0) {
         // alert("you are ordering from different restaurant");
         setOpen(true);
         setModalIndex(index);
