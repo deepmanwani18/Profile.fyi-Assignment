@@ -7,7 +7,7 @@ const Contact = () => {
       <ul>
         <li className="ml-4 float-left max-w space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 ">
           Used Swiggy's live APIs to display restaurants on home page and
-          restaurant's menu page
+          restaurant's menu page. Please install chrome's cors extension.
         </li>
         <li className=" ml-4 float-left max-w space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 ">
           Cart can have food items for only one restaurant, if user adds items
