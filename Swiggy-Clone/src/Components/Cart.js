@@ -4,6 +4,7 @@ import { useCart } from "../utils/CartContext";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import CDN_URL from "../utils/constant";
 const Cart = () => {
   const cart = JSON.parse(localStorage.getItem("cart"));
   const [cartItems, setCartItems] = useState(cart?.addedItems || []);
@@ -106,18 +107,18 @@ const Cart = () => {
       type: "REMOVE",
       payload: item,
     });
-    setCartItems((prevState) => {
-      const newState = prevState.filter((n) => {
-        return n.id !== item.id;
+      setCartItems((prevState) => {
+        const newState = prevState.filter((n) => {
+          return n.id !== item.id;
+        });
+        setGrandTotal(
+          newState.reduce((count, current) => {
+            return count + (current.price / 100) * current.quantity;
+          }, 0)
+        );
+        return newState;
       });
-      setGrandTotal(
-        newState.reduce((count, current) => {
-          return count + (current.price / 100) * current.quantity;
-        }, 0)
-      );
-      return newState;
-    });
-  }
+  };
 
   return cartItems.length === 0 ? (
     <div className="m-auto">
@@ -147,25 +148,40 @@ const Cart = () => {
           return (
             <div className="m-4 p-4 flex justify-between " key={i.id}>
               <h1 className="w-[40%]  flex font-bold text-xl">{i.item}</h1>
+              <div className="container-cart  ">
+                <img
+                  className="w-28 rounded-lg"
+                  src={
+                    i.imageId
+                      ? CDN_URL + i.imageId
+                      : require("../../Public/default-image.jpeg")
+                  }
+                />
 
-              <div className="flex items-center justify-between w-24 p-1 shadow-xl rounded-lg text-white bg-orange">
-                <span
-                  onClick={() => removeHandler(i)}
-                  className="px-1 cursor-pointer"
-                >
-                  −
-                </span>
-                <span>{i.quantity}</span>
-                <span
-                  onClick={() => addHandler(i)}
-                  className="px-1 cursor-pointer"
-                >
-                  +
-                </span>
+                <div className=" btn-cart left-[86%] flex items-center justify-between w-24 p-1 shadow-xl rounded-lg text-white bg-orange">
+                  <span
+                    onClick={() => removeHandler(i)}
+                    className="px-1 cursor-pointer"
+                  >
+                    −
+                  </span>
+                  <span>{i.quantity}</span>
+                  <span
+                    onClick={() => addHandler(i)}
+                    className="px-1 cursor-pointer"
+                  >
+                    +
+                  </span>
+                </div>
               </div>
-              <button onClick={() => removeItemFromCart(i)} className=" bg-white py-1 px-4 rounded text-orange font-bold">
-                Remove Item
-              </button>
+              <div className="w-[10%] h-1">
+                <button
+                  onClick={() => removeItemFromCart(i)}
+                  className=" bg-white py-1 px-4 rounded text-orange font-bold"
+                >
+                  Remove Item
+                </button>
+              </div>
               <p className="w-[20%] text-xl">
                 ₹{((i.price / 100).toFixed(2) * i.quantity).toFixed(2)}
               </p>

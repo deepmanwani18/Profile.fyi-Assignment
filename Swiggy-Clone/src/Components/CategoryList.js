@@ -32,13 +32,16 @@ const CategoryList = ({ listItems, resId, resName }) => {
   };
 
   const addToCart = (index) => {
+    console.log(listItems[index]);
     if (listItems[index]["addedQuantity"]) {
       listItems[index]["addedQuantity"]++;
     } else {
       listItems[index]["addedQuantity"] = 1;
     }
     setListItemsState(listItems);
-    const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
+    const { id, price, name, defaultPrice, imageId } =
+      listItems[index]?.card?.info;
+
     dispatch({
       type: "ADD",
       payload: {
@@ -46,12 +49,14 @@ const CategoryList = ({ listItems, resId, resName }) => {
         id: id,
         price: price || defaultPrice,
         resId: resId,
+        imageId: imageId,
         resName: resName,
       },
     });
   };
   const removeItemsFromCart = (index) => {
-    const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
+    const { id, price, name, defaultPrice, imageId } =
+      listItems[index]?.card?.info;
     if (listItems[index]["addedQuantity"] === undefined) {
       listItems[index]["addedQuantity"] = cart.addedItems.filter((c) => {
         return c.id === id;
@@ -69,6 +74,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
           price: price || defaultPrice,
           resId: resId,
           resName: resName,
+          imageId: imageId,
           quantity: 1,
         },
       });
@@ -86,6 +92,8 @@ const CategoryList = ({ listItems, resId, resName }) => {
           price: price || defaultPrice,
           resId: resId,
           resName: resName,
+          imageId: imageId
+
         },
       });
     }
@@ -147,7 +155,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
                     Add +
                   </button>
                 ) : (
-                  <div className="btn flex justify-between w-16 p-1 shadow-xl rounded-lg text-white bg-orange">
+                  <div className="btn  flex justify-between w-16 p-1 shadow-xl rounded-lg text-white bg-orange">
                     <span
                       onClick={() => removeItemsFromCart(index)}
                       className="px-1 cursor-pointer"

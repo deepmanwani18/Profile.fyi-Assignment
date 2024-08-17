@@ -85,7 +85,16 @@
   width: 100%;
   max-width: 400px;
 }
+.container-cart {
+  position: relative;
+  // width: 100%;
+  max-width: 400px;
+}
 
+.container img {
+  float: right; 
+  height: auto;
+}
 .container img {
   float: right; 
   height: auto;
@@ -100,3 +109,11 @@
  
 }
 
+.container-cart .btn-cart {
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+ 
+}
