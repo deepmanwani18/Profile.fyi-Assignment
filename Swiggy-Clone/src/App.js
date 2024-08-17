@@ -9,6 +9,7 @@ import { BodyComponent } from "./Components/Body";
 import About from "./Components/About";
 import { CartProvider } from "./utils/CartContext";
 import Cart from "./Components/Cart";
+import OrderPlaced from "./Components/OrderPlaced";
 
 const AppLayout = () => {
   const activityStatus = useActivityStatus();
@@ -57,6 +58,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />
+      }, 
+      {
+        path: '/success',
+        element: <OrderPlaced />
       }
     ],
     errorElement: <ErrorComponent />,

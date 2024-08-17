@@ -11,11 +11,10 @@ const CategoryList = ({ listItems, resId, resName }) => {
   const [listItemsState, setListItemsState] = useState([]);
   let cartIds = [];
   const cart = JSON.parse(localStorage.getItem("cart"));
-  if(cart) {
-     cartIds = cart?.addedItems.map((i) => {
+  if (cart) {
+    cartIds = cart?.addedItems.map((i) => {
       return i.id;
     });
-
   }
   const handleAddItem = (index) => {
     if (JSON.parse(localStorage.getItem("cart"))) {
@@ -47,15 +46,15 @@ const CategoryList = ({ listItems, resId, resName }) => {
         id: id,
         price: price || defaultPrice,
         resId: resId,
-        resName: resName
+        resName: resName,
       },
     });
   };
   const removeItemsFromCart = (index) => {
     const { id, price, name, defaultPrice } = listItems[index]?.card?.info;
-    if(listItems[index]["addedQuantity"]  === undefined) {
-      listItems[index]["addedQuantity"] = cart.addedItems.filter(c => {
-        return c.id === id; 
+    if (listItems[index]["addedQuantity"] === undefined) {
+      listItems[index]["addedQuantity"] = cart.addedItems.filter((c) => {
+        return c.id === id;
       })[0].quantity;
     }
     if (listItems[index]["addedQuantity"] === 1) {
@@ -70,7 +69,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
           price: price || defaultPrice,
           resId: resId,
           resName: resName,
-          quantity: 1
+          quantity: 1,
         },
       });
     } else {
@@ -86,7 +85,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
           id: id,
           price: price || defaultPrice,
           resId: resId,
-          resName: resName
+          resName: resName,
         },
       });
     }
@@ -127,9 +126,9 @@ const CategoryList = ({ listItems, resId, resName }) => {
                     ? item?.card?.info?.price / 100
                     : item?.card?.info?.defaultPrice / 100}
                 </p>
-                <p className="text-xs">{item?.card?.info?.description}</p>
+                <p className=" text-xs">{item?.card?.info?.description}</p>
               </div>
-              <div className="container">
+              <div className="container h-[10%]">
                 <img
                   className="w-28 "
                   src={
@@ -139,7 +138,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
                   }
                 />
                 {(listItemsState[index]?.addedQuantity === undefined ||
-                listItemsState[index]?.addedQuantity <= 0 ) &&
+                  listItemsState[index]?.addedQuantity <= 0) &&
                 cartIds.indexOf(item?.card.info?.id) === -1 ? (
                   <button
                     onClick={() => handleAddItem(index)}
@@ -156,7 +155,11 @@ const CategoryList = ({ listItems, resId, resName }) => {
                       {" "}
                       −{" "}
                     </span>
-                    <span>{listItemsState[index]?.addedQuantity || cart?.addedItems[cartIds.indexOf(item?.card.info?.id)]?.quantity}</span>
+                    <span>
+                      {listItemsState[index]?.addedQuantity ||
+                        cart?.addedItems[cartIds.indexOf(item?.card.info?.id)]
+                          ?.quantity}
+                    </span>
                     <span
                       onClick={() => addToCart(index)}
                       className="px-1 cursor-pointer"
@@ -166,7 +169,6 @@ const CategoryList = ({ listItems, resId, resName }) => {
                   </div>
                 )}
               </div>
-              {/*  shadow-xl rounded-lg  mx-8 my-14 text-white bg-orange */}
             </div>
           </div>
         );

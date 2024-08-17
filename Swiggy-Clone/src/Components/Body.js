@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { RES_CARDS_DATA } from "../utils/mock-data";
 import RestaurantCard, { promotedResCard } from "./RestaurantCard";
 import { Shimmer } from "./Shimmer";
 import { Link } from "react-router-dom";
+import { FIND_RES_URL } from "../utils/constant";
 
 export const BodyComponent = () => {
   const [resData, setResData] = useState([]);
@@ -14,12 +14,11 @@ export const BodyComponent = () => {
   }, []);
 
   // retrieving the higher order component
+  // https://proxy.cors.sh/
   const PromotedResCard = promotedResCard(RestaurantCard);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch(FIND_RES_URL);
     const json = await data.json();
     setResData(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -78,7 +77,7 @@ export const BodyComponent = () => {
         </button>
       </div>
       <div className="flex flex-wrap">
-      {filteredResData.length === 0 && <p>404! Not found</p>}
+        {filteredResData.length === 0 && <p>404! Not found</p>}
 
         {filteredResData.map((resCard) => {
           return (

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../utils/CartContext";
 
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 const Cart = () => {
   const cart = JSON.parse(localStorage.getItem("cart"));
   const [cartItems, setCartItems] = useState(cart?.addedItems || []);
@@ -9,8 +11,16 @@ const Cart = () => {
     return count + (current.price / 100) * current.quantity;
   }, 0);
   const [grandTotal, setGrandTotal] = useState(total || 0);
+  const [open, setOpen] = useState(false);
 
   const { dispatch } = useCart();
+  const navigate = useNavigate();
+  const style = {
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    p: 4,
+  };
+  const handleClose = () => setOpen(false);
 
   const checkoutHandler = () => {
     dispatch({ type: "CLEAR" });
@@ -18,6 +28,15 @@ const Cart = () => {
       prevState = [];
       return prevState;
     });
+    navigate("/success");
+  };
+  const clearCartHandler = () => {
+    dispatch({ type: "CLEAR" });
+    setCartItems((prevState) => {
+      prevState = [];
+      return prevState;
+    });
+    setOpen(false);
   };
 
   const addHandler = (item) => {
@@ -37,7 +56,6 @@ const Cart = () => {
           return count + (current.price / 100) * current.quantity;
         }, 0)
       );
-      // setDiscountedPrice((g) => grandTotal / 2);
 
       return newState;
     });
@@ -58,8 +76,6 @@ const Cart = () => {
             return count + (current.price / 100) * current.quantity;
           }, 0)
         );
-        // setDiscountedPrice((g) => grandTotal / 2);
-
         return newState;
       });
     } else {
@@ -80,21 +96,12 @@ const Cart = () => {
           }, 0)
         );
 
-        // setDiscountedPrice((g) => grandTotal / 2);
 
         return newState;
       });
     }
   };
-  const handleInput = (e) => {
-    setCouponCodeString(e.target.value);
-  };
-  const applyCouponCode = () => {
-    if (couponCodeString.toLowerCase() === "FLAT50".toLowerCase()) {
-      setShowDiscountedPrice(true);
-      // setDiscountedPrice(grandTotal / 2);
-    }
-  };
+
   return cartItems.length === 0 ? (
     <div className="m-auto">
       <img
@@ -155,43 +162,52 @@ const Cart = () => {
           <h1 className="m-4"> ₹{grandTotal.toFixed(2)}</h1>
         </div>
 
-        {/* {showDiscountedPrice && (
-          <>
-            <div className=" p-4 m-2 border-orange border-b-2"></div>
-            <div className="m-2 p-2 flex justify-between  w-full gap-12">
-              <h1 className="m-4 font-semibold text-lg">TO PAY</h1>{" "}
-              <h1 className="m-4"> ₹{discountedPrice.toFixed(2)}</h1>
-            </div>{" "}
-          </>
-        )} */}
+      
       </div>
-      {/* <div className="ml-[55%] flex w-[20%] items-center border-b border-orange py-2">
-        <div className="flex flex-col gap-1">
-          <input
-            className="appearance-none bg-transparent border-none w-full text-gray mr-3 py-1 px-2 rounded leading-tight focus:outline-none"
-            type="text"
-            placeholder="Coupon Code"
-            onChange={handleInput}
-            value={couponCodeString}
-          />
-          <span className="flex justify-start text-xs text-gray">
-            *Apply coupon &nbsp; <i>FLAT50</i> &nbsp; to get 50% off.
-          </span>
-        </div>
-        <button
-          onClick={applyCouponCode}
-          className="flex-shrink-0 bg-orange hoverorange border-orange hover:border-orange text-sm border-4 text-white py-1 px-2 rounded"
-          type="button"
-        >
-          Apply
-        </button>
-      </div> */}
+      
       <button
         onClick={checkoutHandler}
-        className="m-4  px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md hover:bg-orange hover:text-white transition ease-linear duration-500"
+        className="m-4  px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md   transition ease-linear duration-500"
       >
         Checkout
       </button>
+      <button
+        onClick={() => setOpen(true)}
+        className="m-4  px-7 py-3 md:px-9 md:py-4 bg-orange font-medium md:font-semibold text-white text-md rounded-md   transition ease-linear duration-500"
+      >
+        Clear Cart
+      </button>
+      <br></br> <br></br>
+      <br></br>
+      <br></br>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          className="bg-skin rounded-lg absolute top-[50%] left-[50%] shadow-lg"
+          sx={style}
+        >
+          <h1 className=" text-orange font-bold">Confirmation</h1>
+          <h2>Are you sure you want to clear the cart items?</h2>
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={handleClose}
+              className="  px-4 py-2 rounded-lg text-orange bg-white"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={clearCartHandler}
+              className="  px-4 py-2 rounded-lg text-white bg-orange"
+            >
+              Yes
+            </button>
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 };
