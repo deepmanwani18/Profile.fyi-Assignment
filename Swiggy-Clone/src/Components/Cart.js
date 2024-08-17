@@ -71,7 +71,7 @@ const Cart = () => {
     });
   };
 
-  // if an item has one quantity, item will be removed from otherwise, item count is decreased by one
+  // if an item has one quantity, item will be removed from cart, otherwise, item count is decreased by one
 
   const removeHandler = (item) => {
     if (item.quantity === 1) {
