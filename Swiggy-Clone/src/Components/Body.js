@@ -102,6 +102,12 @@ export const BodyComponent = () => {
           >
             Search
           </button>
+          <button
+            className="m-4 bg-white py-1 px-4 rounded text-orange font-bold"
+            onClick={clearSearch}
+          >
+            Clear Search
+          </button>
         </div>
         <button
           onClick={() => {

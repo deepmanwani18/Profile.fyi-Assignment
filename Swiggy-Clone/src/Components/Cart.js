@@ -96,11 +96,28 @@ const Cart = () => {
           }, 0)
         );
 
-
         return newState;
       });
     }
   };
+
+  const removeItemFromCart = (item) => {
+    dispatch({
+      type: "REMOVE",
+      payload: item,
+    });
+    setCartItems((prevState) => {
+      const newState = prevState.filter((n) => {
+        return n.id !== item.id;
+      });
+      setGrandTotal(
+        newState.reduce((count, current) => {
+          return count + (current.price / 100) * current.quantity;
+        }, 0)
+      );
+      return newState;
+    });
+  }
 
   return cartItems.length === 0 ? (
     <div className="m-auto">
@@ -125,22 +142,18 @@ const Cart = () => {
     <div className="text-center bg-skin ">
       <h1 className="font-bold  text-2xl pt-5">Your Cart</h1>
       <h1 className="font-bold  text-2xl pt-5">{cartItems[0]?.resName}</h1>
-      <div className="w-6/12 m-auto mt-4 bg-skin p-4  mb-4 rounded shadow-2xl  ">
+      <div className="w-10/12 m-auto mt-4 bg-skin p-4  mb-4 rounded shadow-2xl  ">
         {cartItems.map((i) => {
           return (
-            <div
-              className="m-4 p-4 flex justify-between  w-full gap-12"
-              key={i.id}
-            >
-              <h1 className="w-[80%] flex font-bold text-xl">{i.item}</h1>
+            <div className="m-4 p-4 flex justify-between " key={i.id}>
+              <h1 className="w-[40%]  flex font-bold text-xl">{i.item}</h1>
 
               <div className="flex items-center justify-between w-24 p-1 shadow-xl rounded-lg text-white bg-orange">
                 <span
                   onClick={() => removeHandler(i)}
                   className="px-1 cursor-pointer"
                 >
-                  {" "}
-                  −{" "}
+                  −
                 </span>
                 <span>{i.quantity}</span>
                 <span
@@ -150,6 +163,9 @@ const Cart = () => {
                   +
                 </span>
               </div>
+              <button onClick={() => removeItemFromCart(i)} className=" bg-white py-1 px-4 rounded text-orange font-bold">
+                Remove Item
+              </button>
               <p className="w-[20%] text-xl">
                 ₹{((i.price / 100).toFixed(2) * i.quantity).toFixed(2)}
               </p>
@@ -157,17 +173,14 @@ const Cart = () => {
           );
         })}
         <div className=" p-4 m-2 border-orange border-b-2"></div>
-        <div className="m-2 p-2 flex justify-between  w-full gap-12">
+        <div className="m-2 p-2 flex justify-between  w-11/12 gap-10">
           <h1 className="m-4 font-semibold text-lg">TO PAY</h1>{" "}
           <h1 className="m-4"> ₹{grandTotal.toFixed(2)}</h1>
         </div>
-
-      
       </div>
-      
       <button
         onClick={checkoutHandler}
-        className="m-4  px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md   transition ease-linear duration-500"
+        className="m-4 px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md   transition ease-linear duration-500"
       >
         Checkout
       </button>
