@@ -113,7 +113,7 @@ const Cart = () => {
     }
   };
 
-  //  removes the item from cart doesn't matter how many items are in cart
+  //  removes the item from cart, doesn't matter how much item count is
   const removeItemFromCart = (item) => {
     dispatch({
       type: "REMOVE",
