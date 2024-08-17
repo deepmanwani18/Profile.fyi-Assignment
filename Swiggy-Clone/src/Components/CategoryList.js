@@ -1,8 +1,7 @@
 import { useCart } from "../utils/CartContext";
-import CDN_URL from "../utils/constant";
+import CDN_URL, { modalBoxStyle } from "../utils/constant";
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+import ConfirmationModal from "../utils/ConfirmationModal";
 const CategoryList = ({ listItems, resId, resName }) => {
   const [open, setOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
@@ -92,8 +91,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
           price: price || defaultPrice,
           resId: resId,
           resName: resName,
-          imageId: imageId
-
+          imageId: imageId,
         },
       });
     }
@@ -105,11 +103,7 @@ const CategoryList = ({ listItems, resId, resName }) => {
     addToCart(index);
     handleClose();
   };
-  const style = {
-    transform: "translate(-50%, -50%)",
-    width: 600,
-    p: 4,
-  };
+
   return (
     <div>
       {listItems.map((item, index) => {
@@ -181,38 +175,14 @@ const CategoryList = ({ listItems, resId, resName }) => {
           </div>
         );
       })}
-      <Modal
+      <ConfirmationModal
         open={open}
-        index={modalIndex}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          className="bg-skin rounded-lg absolute top-[50%] left-[50%] shadow-lg"
-          sx={style}
-        >
-          <h1 className=" text-orange font-bold">Items already in cart</h1>
-          <h2>
-            Your cart contains items from other restaurant. Would you like to
-            reset your cart for adding items from this restaurant?
-          </h2>
-          <div className="flex justify-end gap-3">
-            <button
-              onClick={handleClose}
-              className="  px-4 py-2 rounded-lg text-orange bg-white"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => clearCartAndAddNewItem(modalIndex)}
-              className="  px-4 py-2 rounded-lg text-white bg-orange"
-            >
-              Yes
-            </button>
-          </div>
-        </Box>
-      </Modal>
+        onConfirm={() => clearCartAndAddNewItem(modalIndex)}
+        title="Items already in cart"
+        message="Your cart contains items from other restaurant. Would you like to
+      reset your cart for adding items from this restaurant?"
+      />
     </div>
   );
 };

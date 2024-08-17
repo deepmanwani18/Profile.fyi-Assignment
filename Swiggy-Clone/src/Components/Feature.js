@@ -1,6 +1,6 @@
-const Contact = () => {
+const Feature = () => {
   return (
-    <div className="bg-skin text-center ">
+    <div className="bg-skin text-center h-[80vh] ">
       <h1 className="font-normal text-gray-900 text-4xl md:text-4xl leading-none mb-8">
         Features
       </h1>
@@ -33,28 +33,8 @@ const Contact = () => {
         </li>
       </ul>
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };
 
-export default Contact;
+export default Feature;

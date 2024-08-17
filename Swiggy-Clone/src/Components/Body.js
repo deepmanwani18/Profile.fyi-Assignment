@@ -3,6 +3,7 @@ import RestaurantCard, { promotedResCard } from "./RestaurantCard";
 import { Shimmer } from "./Shimmer";
 import { Link } from "react-router-dom";
 import { FIND_RES_URL } from "../utils/constant";
+import { CorsError } from "./CorsError";
 
 export const BodyComponent = () => {
   const [resData, setResData] = useState([]);
@@ -13,10 +14,11 @@ export const BodyComponent = () => {
     fetchData();
   }, []);
 
-  // retrieving the higher order component
-  // https://proxy.cors.sh/
+  // retrieving the higher order component for promoted badge on restaurant card
+  // PromotedResCard is a higher order component
+  
   const PromotedResCard = promotedResCard(RestaurantCard);
-
+  // please use chrome's cors extension since this is swiggy's API, not installing the extension will lead to CORS issue.
   const fetchData = async () => {
     try {
       const data = await fetch(FIND_RES_URL);
@@ -38,6 +40,9 @@ export const BodyComponent = () => {
       setfilteredResData(null);
     }
   };
+
+  // clears the search filter, be it from search button or 'show top restaurants'
+
   const clearSearch = () => {
     setSearchQuery("");
     const newResData = resData.filter((res) =>
@@ -45,26 +50,13 @@ export const BodyComponent = () => {
     );
     setfilteredResData(newResData);
   };
+
+  // in case of CORS issue, setting the resData as null
+  // initial state of resData is empty array
+  // Errors are handled accordingly
   return resData === null ? (
     <>
-      <div className=" bg-gradient-to-br bg-skin to-slate-100">
-        <div className="flex flex-col justify-center h-[80vh] max-w-6xl mx-auto p-5">
-          <h1 className="text-8xl text-orange font-bold [font-size:_clamp(2.5em,8vw,7em)] mb-3">
-            Oops!
-          </h1>
-          <hr className="mb-5 w-36 h-1 bg-teal border-0" />
-          <p className="mb-5 text-xl sm:text-3xl text-orange">
-            This app is using Swiggy's live APIs to show restaurants on the app.
-            You are facing CORS issue.
-          </p>
-          <p className="mb-5 text-xl sm:text-3xl text-orange">
-            1. Please install <a className=" font-bold underline cursor-pointer" target="_blank" href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en">chrome's CORS extension</a>  and turn it on.{" "}
-          </p>
-          <p className="mb-5 text-xl sm:text-3xl text-orange">
-            2. This app will work after step 1 and reloading the page.
-          </p>
-        </div>
-      </div>
+      <CorsError />
     </>
   ) : resData.length === 0 ? (
     <div className="shimmer-container">
@@ -82,7 +74,7 @@ export const BodyComponent = () => {
       <Shimmer />
     </div>
   ) : (
-    <div className="bg-skin">
+    <div className="h-full bg-skin">
       <div className="flex justify-between">
         <div>
           <input
@@ -106,7 +98,7 @@ export const BodyComponent = () => {
             className="m-4 bg-white py-1 px-4 rounded text-orange font-bold"
             onClick={clearSearch}
           >
-            Clear Search
+            Clear Filter
           </button>
         </div>
         <button

@@ -3,7 +3,10 @@ import { useState } from "react";
 
 const RestaurantCategoryAccordion = ({ categoryInfo, resId, resName }) => {
   const { title, itemCards } = categoryInfo?.card?.card;
-  const [showAccordianData, setShowAccordianData] = useState(true);
+  const [showAccordianData, setShowAccordianData] = useState(true); 
+
+  // Accordion Component, collapse and expand functionality
+
   return (
     <div>
       <div className="w-6/12 m-auto bg-skin p-4  mb-4 rounded shadow-2xl  ">

@@ -1,11 +1,15 @@
 import React from "react";
-import { User } from "./User";
-import UserClass from "./UserClass";
+import { RESUME_DRIVE_LINK } from "../utils/constant";
+
+
+// only class Based Component in whole app
 
 class About extends React.Component {
   constructor() {
     super();
   }
+
+  // static page
  
   render() {
     return (
@@ -29,7 +33,7 @@ class About extends React.Component {
           </p>
 
           <button onClick={() => {
-            window.open('https://drive.google.com/file/d/10fkhfJwH4suPjX1HnGetFZnRrF-7RKzt/view?usp=sharing')
+            window.open(RESUME_DRIVE_LINK)
           }} className="m-4 border px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md hover:bg-orange hover:text-white transition ease-linear duration-500">
           Get my CV
         </button>

@@ -1,6 +1,5 @@
 import { Shimmer } from "./Shimmer";
 import { useParams } from "react-router-dom";
-import { singleResDataUrl } from "../utils/constant";
 import userFetchResMenuData from "../utils/useFetchResMenuData";
 import RestaurantCategoryAccordion from "./RestaurantCategoryAccordion";
 
@@ -32,7 +31,7 @@ const RestaurantMenu = () => {
     );
 
   return (
-    <div className="text-center bg-skin">
+    <div className="text-center bg-skin ">
       <h1 className="font-bold  text-2xl pt-5">{name + ", " + locality}</h1>
       <p className="font-bold text-lg">{avgRating} stars</p>
       <p>

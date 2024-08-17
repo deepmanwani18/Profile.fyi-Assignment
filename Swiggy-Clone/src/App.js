@@ -15,16 +15,17 @@ const AppLayout = () => {
   const activityStatus = useActivityStatus();
 
   return !activityStatus ? (
-    <h1>Your internet is a bit wonky, please check network connection.</h1>
+    // <h1>Your internet is a bit wonky, please check network connection.</h1>
+    <ErrorComponent noInternet={true} />
   ) : (
-    <div className="app">
+    <div className="app h-full">
       <HeaderComponent />
       <Outlet />
     </div>
   );
 };
 
-const Contact = lazy(() => import("./Components/Contact"));
+const Feature = lazy(() => import("./Components/Feature"));
 
 const appRouter = createBrowserRouter([
   {
@@ -40,10 +41,10 @@ const appRouter = createBrowserRouter([
         element: <BodyComponent />,
       },
       {
-        path: "/contact",
+        path: "/feature",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
-            <Contact />
+            <Feature />
           </Suspense>
         ),
       },
@@ -64,7 +65,7 @@ const appRouter = createBrowserRouter([
         element: <OrderPlaced />
       }
     ],
-    errorElement: <ErrorComponent />,
+    errorElement: <ErrorComponent noInternet={false}/>,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));

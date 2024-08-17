@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../utils/CartContext";
 
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import CDN_URL from "../utils/constant";
+import { EmptyCart } from "./EmptyCart";
+import ConfirmationModal from "../utils/ConfirmationModal";
 const Cart = () => {
+  // retrieving the cart items from localStorage on render
   const cart = JSON.parse(localStorage.getItem("cart"));
+
   const [cartItems, setCartItems] = useState(cart?.addedItems || []);
   const total = cartItems?.reduce((count, current) => {
     return count + (current.price / 100) * current.quantity;
@@ -15,14 +17,16 @@ const Cart = () => {
   const [open, setOpen] = useState(false);
 
   const { dispatch } = useCart();
+
+  // useNavigate hook, provided by react-router for navigating
+
   const navigate = useNavigate();
-  const style = {
-    transform: "translate(-50%, -50%)",
-    width: 600,
-    p: 4,
-  };
+
   const handleClose = () => setOpen(false);
 
+  // handles the checkout process, clears the cart and navigates to success page confirming order is successfully placed
+
+  // since setting state variables is asynchronous, using call-back function in state setter 
   const checkoutHandler = () => {
     dispatch({ type: "CLEAR" });
     setCartItems((prevState) => {
@@ -31,6 +35,9 @@ const Cart = () => {
     });
     navigate("/success");
   };
+
+  // clearing the cart
+
   const clearCartHandler = () => {
     dispatch({ type: "CLEAR" });
     setCartItems((prevState) => {
@@ -39,6 +46,8 @@ const Cart = () => {
     });
     setOpen(false);
   };
+
+  // adding items to cart on cart page
 
   const addHandler = (item) => {
     dispatch({
@@ -61,6 +70,8 @@ const Cart = () => {
       return newState;
     });
   };
+
+  // if an item has one quantity, item will be removed from otherwise, item count is decreased by one
 
   const removeHandler = (item) => {
     if (item.quantity === 1) {
@@ -102,45 +113,30 @@ const Cart = () => {
     }
   };
 
+  //  removes the item from cart doesn't matter how many items are in cart
   const removeItemFromCart = (item) => {
     dispatch({
       type: "REMOVE",
       payload: item,
     });
-      setCartItems((prevState) => {
-        const newState = prevState.filter((n) => {
-          return n.id !== item.id;
-        });
-        setGrandTotal(
-          newState.reduce((count, current) => {
-            return count + (current.price / 100) * current.quantity;
-          }, 0)
-        );
-        return newState;
+    setCartItems((prevState) => {
+      const newState = prevState.filter((n) => {
+        return n.id !== item.id;
       });
+      setGrandTotal(
+        newState.reduce((count, current) => {
+          return count + (current.price / 100) * current.quantity;
+        }, 0)
+      );
+      return newState;
+    });
   };
 
   return cartItems.length === 0 ? (
-    <div className="m-auto">
-      <img
-        className="m-auto w-[500px] mt-4"
-        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0"
-      />
-
-      <span className="flex justify-center   text-gray text-3xl mt-10 font-bold ">
-        Your cart is empty{" "}
-      </span>
-      <span className="flex justify-center   text-gray mt-4">
-        You can go to home page to view more restaurants
-      </span>
-      <Link to="/">
-        <button className="flex justify-center m-auto mt-4 border px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md hover:bg-orange hover:text-white transition ease-linear duration-500">
-          SEE RESTAURANTS NEAR YOU
-        </button>
-      </Link>
-    </div>
+    // showing empty cart page when cart is empty
+    <EmptyCart />
   ) : (
-    <div className="text-center bg-skin ">
+    <div className="text-center bg-skin h-full">
       <h1 className="font-bold  text-2xl pt-5">Your Cart</h1>
       <h1 className="font-bold  text-2xl pt-5">{cartItems[0]?.resName}</h1>
       <div className="w-10/12 m-auto mt-4 bg-skin p-4  mb-4 rounded shadow-2xl  ">
@@ -206,37 +202,13 @@ const Cart = () => {
       >
         Clear Cart
       </button>
-      <br></br> <br></br>
-      <br></br>
-      <br></br>
-      <Modal
+      <ConfirmationModal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          className="bg-skin rounded-lg absolute top-[50%] left-[50%] shadow-lg"
-          sx={style}
-        >
-          <h1 className=" text-orange font-bold">Confirmation</h1>
-          <h2>Are you sure you want to clear the cart items?</h2>
-          <div className="flex justify-end gap-3">
-            <button
-              onClick={handleClose}
-              className="  px-4 py-2 rounded-lg text-orange bg-white"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={clearCartHandler}
-              className="  px-4 py-2 rounded-lg text-white bg-orange"
-            >
-              Yes
-            </button>
-          </div>
-        </Box>
-      </Modal>
+        onConfirm={clearCartHandler}
+        title="Confirmation"
+        message="Are you sure you want to clear the cart items?"
+      />
     </div>
   );
 };

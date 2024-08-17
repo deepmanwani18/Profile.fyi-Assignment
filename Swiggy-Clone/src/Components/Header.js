@@ -6,8 +6,12 @@ import { useCart } from "../utils/CartContext";
 export const HeaderComponent = () => {
 
   const [loginLogoutString, setLoginLogoutString] = useState("Login");
+
+  // as soon as user adds an item in the cart, item count will be reflected in header because of below code.
+
   const {cartSize} = useCart();
   
+  // Link is provided by React Router DOM to handle routing
   return (
     <div className="flex justify-between bg-orange shadow-lg pt-2 pb-2">
       <div className="w-28 ml-4">
@@ -27,7 +31,7 @@ export const HeaderComponent = () => {
             <Link to="/about">About Me</Link>
           </li>
           <li className="font-bold text-white px-4">
-            <Link to="/contact">Contact Us</Link>
+            <Link to="/feature">Features</Link>
           </li>
 
           <li className="font-bold text-white px-4">
