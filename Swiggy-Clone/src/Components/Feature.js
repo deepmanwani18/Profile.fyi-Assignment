@@ -1,7 +1,7 @@
 const Feature = () => {
   return (
     <div className="bg-skin text-center h-[80vh] ">
-      <h1 className="font-normal text-gray-900 text-4xl md:text-4xl leading-none mb-8">
+      <h1 className="font-normal text-gray-900 text-4xl md:text-4xl mb-8">
         Features
       </h1>
       <ul>
@@ -26,13 +26,13 @@ const Feature = () => {
         <li className=" ml-4 float-left max-w space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 ">
           Shows Empty cart when cart is Empty (Error handling).
         </li>
+
         <li className=" ml-4 float-left max-w space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 ">
           I have kept this particular module to demo lazy loading in this app.
           Feel free to check Network tab resources. Along with index.js, one
           separate file would be generated (On-demand).
         </li>
       </ul>
-
     </div>
   );
 };

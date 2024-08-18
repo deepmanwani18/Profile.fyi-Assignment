@@ -2,7 +2,7 @@ import { Link, useRouteError } from "react-router-dom"
 
 export const ErrorComponent = ({noInternet}) => {
     const error = useRouteError();
-    console.log(error);
+    console.error(error);
     return <div className="h-screen bg-gradient-to-br bg-skin to-slate-100">
     <div className="flex flex-col justify-center h-screen max-w-6xl mx-auto p-5">
       <h1 className="text-8xl text-orange font-bold [font-size:_clamp(2.5em,8vw,7em)] mb-3">Oops!</h1>

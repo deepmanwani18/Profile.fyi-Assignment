@@ -31,7 +31,6 @@ const CategoryList = ({ listItems, resId, resName }) => {
   };
 
   const addToCart = (index) => {
-    console.log(listItems[index]);
     if (listItems[index]["addedQuantity"]) {
       listItems[index]["addedQuantity"]++;
     } else {

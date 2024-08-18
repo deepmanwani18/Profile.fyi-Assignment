@@ -173,7 +173,7 @@ const Cart = () => {
               <div className="w-[10%] h-1">
                 <button
                   onClick={() => removeItemFromCart(i)}
-                  className=" bg-white py-1 px-4 rounded text-orange font-bold"
+                  className="hover:bg-orange bg-white py-1 px-4 rounded hover:text-white text-orange font-bold transition duration-500"
                 >
                   Remove Item
                 </button>
@@ -192,13 +192,13 @@ const Cart = () => {
       </div>
       <button
         onClick={checkoutHandler}
-        className="m-4 px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-orange text-md rounded-md   transition ease-linear duration-500"
+        className="m-4 px-7 py-3 md:px-9 md:py-4 hover:shadow-2xl bg-white font-medium md:font-semibold text-orange  text-md rounded-md   transition ease-linear duration-500"
       >
         Checkout
       </button>
       <button
         onClick={() => setOpen(true)}
-        className="m-4  px-7 py-3 md:px-9 md:py-4 bg-orange font-medium md:font-semibold text-white text-md rounded-md   transition ease-linear duration-500"
+        className="m-4  px-7 py-3 md:px-9 md:py-4 hover:shadow-2xl bg-orange font-medium md:font-semibold text-white  text-md rounded-md   transition ease-linear duration-500"
       >
         Clear Cart
       </button>

@@ -84,7 +84,7 @@ export const BodyComponent = () => {
             className="m-4 border border-solid rounded"
           />
           <button
-            className="m-4 bg-orange py-1 px-4 rounded text-white font-bold"
+            className="m-4 hover:bg-white bg-orange py-1 px-4 rounded text-white hover:text-orange font-bold"
             onClick={() => {
               const newResData = resData.filter((res) =>
                 res.info.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -95,7 +95,7 @@ export const BodyComponent = () => {
             Search
           </button>
           <button
-            className="m-4 bg-white py-1 px-4 rounded text-orange font-bold"
+            className="m-4 bg-white hover:bg-orange py-1 px-4 rounded text-orange hover:text-white font-bold"
             onClick={clearSearch}
           >
             Clear Filter
@@ -107,7 +107,7 @@ export const BodyComponent = () => {
               filteredResData.filter((res) => res.info.avgRating > 4.2)
             );
           }}
-          className="bg-orange rounded py-1 px-4 m-4 text-white font-bold"
+          className="bg-orange hover:bg-white rounded py-1 px-4 m-4 text-white hover:text-orange font-bold"
         >
           See Top rated restaurants
         </button>
@@ -138,7 +138,7 @@ export const BodyComponent = () => {
         {filteredResData.map((resCard) => {
           return (
             <Link key={resCard.info.id} to={"restaurants/" + resCard.info.id}>
-              {!resCard?.info?.isOpen ? (
+              {!resCard?.info?.badges?.imageBadges ? (
                 <RestaurantCard resData={resCard} />
               ) : (
                 <PromotedResCard resData={resCard} />
