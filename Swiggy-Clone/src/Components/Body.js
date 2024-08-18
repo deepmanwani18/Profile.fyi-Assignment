@@ -87,7 +87,7 @@ export const BodyComponent = () => {
             className="m-4 hover:bg-white bg-orange py-1 px-4 rounded text-white hover:text-orange font-bold"
             onClick={() => {
               const newResData = resData.filter((res) =>
-                res.info.name.toLowerCase().includes(searchQuery.toLowerCase())
+                (res.info.name + ' ' + res.info.cuisines.join('')).toLowerCase().includes(searchQuery.toLowerCase())
               );
               setfilteredResData(newResData);
             }}
