@@ -16,7 +16,7 @@ export const BodyComponent = () => {
 
   // retrieving the higher order component for promoted badge on restaurant card
   // PromotedResCard is a higher order component
-  
+
   const PromotedResCard = promotedResCard(RestaurantCard);
   // please use chrome's cors extension since this is swiggy's API, not installing the extension will lead to CORS issue.
   const fetchData = async () => {
@@ -74,34 +74,34 @@ export const BodyComponent = () => {
       <Shimmer />
     </div>
   ) : (
-    <div className="h-full bg-skin">
-      <div className="flex justify-between">
-        <div>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-            className="m-4 border border-solid rounded"
-          />
-          <button
-            className="m-4 hover:bg-white bg-orange py-1 px-4 rounded text-white hover:text-orange font-bold"
-            onClick={() => {
-              const newResData = resData.filter((res) =>
-                (res.info.name + ' ' + res.info.cuisines.join('')).toLowerCase().includes(searchQuery.toLowerCase())
-              );
-              setfilteredResData(newResData);
-            }}
-          >
-            Search
-          </button>
-          <button
-            className="m-4 bg-white hover:bg-orange py-1 px-4 rounded text-orange hover:text-white font-bold"
-            onClick={clearSearch}
-          >
-            Clear Filter
-          </button>
-        </div>
+    <div className="h-full pl-8 bg-skin">
+      <div className="flex justify-start">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          className="m-4 border border-solid rounded"
+        />
         <button
+          className="m-4 hover:shadow-2xl bg-orange py-1 px-4 rounded text-white  font-bold"
+          onClick={() => {
+            const newResData = resData.filter((res) =>
+              (res.info.name + " " + res.info.cuisines.join(""))
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase())
+            );
+            setfilteredResData(newResData);
+          }}
+        >
+          Search
+        </button>
+        <button
+          className="m-4 bg-white hover:shadow-2xl py-1 px-4 rounded text-orange  font-bold"
+          onClick={clearSearch}
+        >
+          Clear Filter
+        </button>
+        {/* <button
           onClick={() => {
             setfilteredResData(
               filteredResData.filter((res) => res.info.avgRating > 4.2)
@@ -110,7 +110,7 @@ export const BodyComponent = () => {
           className="bg-orange hover:bg-white rounded py-1 px-4 m-4 text-white hover:text-orange font-bold"
         >
           See Top rated restaurants
-        </button>
+        </button> */}
       </div>
       <div className="flex flex-wrap">
         {filteredResData.length === 0 && (
