@@ -14,6 +14,9 @@ const Cart = () => {
     return count + (current.price / 100) * current.quantity;
   }, 0);
   const [grandTotal, setGrandTotal] = useState(total || 0);
+  const [couponCodeText, setCouponCodeText] = useState("");
+  const [discountCounter, setDiscountCounter] = useState(0);
+  const [discountPrompt, setDiscountPrompt] = useState('Apply Coupon FLAT50 to get 50% off.')
   const [open, setOpen] = useState(false);
 
   const { dispatch } = useCart();
@@ -26,7 +29,7 @@ const Cart = () => {
 
   // handles the checkout process, clears the cart and navigates to success page confirming order is successfully placed
 
-  // since setting state variables is asynchronous, using call-back function in state setter 
+  // since setting state variables is asynchronous, using call-back function in state setter
   const checkoutHandler = () => {
     dispatch({ type: "CLEAR" });
     setCartItems((prevState) => {
@@ -132,6 +135,18 @@ const Cart = () => {
     });
   };
 
+  const applyCouponHandler = () => {
+    if(couponCodeText.toLowerCase() === 'flat50' && discountCounter < 1) {
+      setGrandTotal(grandTotal => {
+        return grandTotal / 2;
+      });
+      setDiscountCounter(discountCounter + 1);
+      setCouponCodeText('');
+      setDiscountPrompt('Coupon Applied!')
+    } else {
+      setDiscountPrompt('Not applicable!')
+    }
+  }
   return cartItems.length === 0 ? (
     // showing empty cart page when cart is empty
     <EmptyCart />
@@ -189,6 +204,26 @@ const Cart = () => {
           <h1 className="m-4 font-semibold text-lg">TO PAY</h1>{" "}
           <h1 className="m-4"> ₹{grandTotal.toFixed(2)}</h1>
         </div>
+        <div className="flex justify-end gap-10 mr-9">
+          <div className="flex flex-col">
+            <input
+              className="rounded p-1"
+              type="text"
+              value={couponCodeText}
+              placeholder="Enter coupon code..."
+              onChange={(e) => setCouponCodeText(e.target.value)}
+            />
+            <span className= "flex justify-start text-gray text-xs">
+              <i>{discountPrompt}</i>
+            </span>
+          </div>
+          <button
+            onClick={applyCouponHandler}
+            className="bg-orange hover:bg-white py-1 px-4 rounded text-white hover:text-orange font-bold transition duration-500"
+          >
+            Apply
+          </button>
+        </div>
       </div>
       <button
         onClick={checkoutHandler}
@@ -202,6 +237,7 @@ const Cart = () => {
       >
         Clear Cart
       </button>
+
       <ConfirmationModal
         open={open}
         onClose={handleClose}

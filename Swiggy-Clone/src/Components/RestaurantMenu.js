@@ -31,7 +31,7 @@ const RestaurantMenu = () => {
     );
 
   return (
-    <div className="text-center bg-skin ">
+    <div className="text-center bg-skin min-h-[100vh]">
       <h1 className="font-bold  text-2xl pt-5">{name + ", " + locality}</h1>
       <p className="font-bold text-lg">{avgRating} stars</p>
       <p>
