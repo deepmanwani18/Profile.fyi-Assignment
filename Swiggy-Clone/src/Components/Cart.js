@@ -71,7 +71,7 @@ const Cart = () => {
     });
   };
 
-  // if an item has one quantity, item will be removed from otherwise, item count is decreased by one
+  // if an item has one quantity, item will be removed from cart, otherwise, item count is decreased by one
 
   const removeHandler = (item) => {
     if (item.quantity === 1) {
@@ -113,7 +113,7 @@ const Cart = () => {
     }
   };
 
-  //  removes the item from cart doesn't matter how many items are in cart
+  //  removes the item from cart, doesn't matter how much item count is
   const removeItemFromCart = (item) => {
     dispatch({
       type: "REMOVE",
